@@ -40,14 +40,11 @@ import androidx.compose.ui.unit.sp
 private val gray25 = Color(0x40050505)
 private val gray100 = Color(0xFF050505)
 private val gray50 = Color(0x80050505)
-
-private val gray75 = Color(0xBF000000)
-
-private val gray10 = Color(0x1A000000)
-
-private val innerShadowColor2 = Color(0x40FFFFFF)
-private val innerShadowColor3 = Color(0xFFFFFFFF)
-
+private val gray75 = Color(0xBF050505)
+private val gray10 = Color(0x1A050505)
+private val white15 = Color(0x26FFFFFF)
+private val white25 = Color(0x40FFFFFF)
+private val white100 = Color(0xFFFFFFFF)
 private val innerButtonBackgroundColors = listOf(Color(0xffE6E6E6), Color(0xffB4B4B4))
 private val innerButtonTextColors = listOf(Color(0xFF4B4B4B), Color(0xFF191919))
 
@@ -64,14 +61,16 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
       targetValue = if (isPressed) 0.975f else 1f,
       animationSpec = tween(durationMillis = 250, easing = Ease),
     )
-  val innerButtonInset by animateDpAsState(
-    targetValue = if (isPressed) 2.dp else 0.dp,
-    animationSpec = tween(durationMillis = 250, easing = Ease),
-  )
-  val innerButtonInsetColor by animateColorAsState(
-    targetValue = if (isPressed) gray75 else Color.Transparent,
-    animationSpec = tween(durationMillis = 250, easing = Ease),
-  )
+  val innerButtonInset by
+    animateDpAsState(
+      targetValue = if (isPressed) 2.dp else 0.dp,
+      animationSpec = tween(durationMillis = 250, easing = Ease),
+    )
+  val innerButtonInsetColor by
+    animateColorAsState(
+      targetValue = if (isPressed) gray75 else Color.Transparent,
+      animationSpec = tween(durationMillis = 250, easing = Ease),
+    )
 
   val textScale by
     animateFloatAsState(
@@ -129,6 +128,107 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
   val outerShadowYOffset3 by
     animateDpAsState(
       targetValue = if (isPressed) 0.dp else 14.4.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+
+  val innerShadowRadius1 by
+    animateDpAsState(
+      targetValue = if (isPressed) 2.4.dp else 0.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val innerShadowXOffset1 by
+    animateDpAsState(
+      targetValue = if (isPressed) 4.8.dp else 0.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val innerShadowYOffset1 by
+    animateDpAsState(
+      targetValue = if (isPressed) 7.2.dp else 0.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val innerShadowColor1 by
+    animateColorAsState(
+      targetValue = if (isPressed) gray75 else gray10,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+
+  val innerShadowSpread2 by
+    animateDpAsState(
+      targetValue = if (isPressed) 1.2.dp else 0.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val innerShadowXOffset2 by
+    animateDpAsState(
+      targetValue = if (isPressed) (-1.2).dp else (-2.4).dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val innerShadowYOffset2 by
+    animateDpAsState(
+      targetValue = if (isPressed) (-1.44).dp else (-2.4).dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val innerShadowColor2 by
+    animateColorAsState(
+      targetValue = if (isPressed) gray50 else gray25,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+
+  val innerShadowRadius3 by
+    animateDpAsState(
+      targetValue = if (isPressed) 9.6.dp else 0.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val innerShadowXOffset3 by
+    animateDpAsState(
+      targetValue = if (isPressed) 12.dp else 0.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val innerShadowYOffset3 by
+    animateDpAsState(
+      targetValue = if (isPressed) 12.dp else 0.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val innerShadowColor3 by
+    animateColorAsState(
+      targetValue = if (isPressed) gray50 else gray10,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+
+  val innerShadowSpread4 by
+    animateDpAsState(
+      targetValue = if (isPressed) 24.dp else 9.6.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val innerShadowColor4 by
+    animateColorAsState(
+      targetValue = if (isPressed) white15 else white25,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+
+  val innerShadowRadius5 by
+    animateDpAsState(
+      targetValue = if (isPressed) 0.dp else 4.8.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val innerShadowXOffset5 by
+    animateDpAsState(
+      targetValue = if (isPressed) 0.dp else 1.2.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val innerShadowYOffset5 by
+    animateDpAsState(
+      targetValue = if (isPressed) 0.dp else 2.4.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+
+  val innerShadowRadius7 by
+    animateDpAsState(
+      targetValue = if (isPressed) 9.6.dp else 12.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val innerShadowYOffset7 by
+    animateDpAsState(
+      targetValue = if (isPressed) (-5.76).dp else (-12).dp,
       animationSpec = tween(durationMillis = 300, easing = Ease),
     )
 
@@ -218,32 +318,19 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
             shape = pillShape,
             shadow =
               Shadow(
+                radius = innerShadowRadius1,
+                spread = 0.dp,
+                offset = DpOffset(innerShadowXOffset1, innerShadowYOffset1),
+                color = innerShadowColor1,
+              ),
+          )
+          .innerShadow(
+            shape = pillShape,
+            shadow =
+              Shadow(
                 radius = 2.4.dp,
-                spread = 0.dp,
-                offset = DpOffset((-2.4).dp, (-2.4).dp),
-                color = gray25,
-              ),
-          )
-          .innerShadow(
-            shape = pillShape,
-            shadow = Shadow(radius = 2.4.dp, spread = 9.6.dp, color = innerShadowColor2),
-          )
-          .innerShadow(
-            shape = pillShape,
-            shadow =
-              Shadow(
-                radius = 4.8.dp,
-                spread = 0.dp,
-                offset = DpOffset(1.2.dp, 2.4.dp),
-                color = innerShadowColor3,
-              ),
-          )
-          .innerShadow(
-            shape = pillShape,
-            shadow =
-              Shadow(
-                radius = 5.76.dp,
-                offset = DpOffset(5.76.dp, 5.76.dp),
+                spread = innerShadowSpread2,
+                offset = DpOffset(innerShadowXOffset2, innerShadowYOffset2),
                 color = innerShadowColor2,
               ),
           )
@@ -251,9 +338,36 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
             shape = pillShape,
             shadow =
               Shadow(
-                radius = 12.dp,
+                radius = innerShadowRadius3,
+                spread = 0.dp,
+                offset = DpOffset(innerShadowXOffset3, innerShadowYOffset3),
+                color = innerShadowColor3,
+              ),
+          )
+          .innerShadow(
+            shape = pillShape,
+            shadow = Shadow(radius = 2.4.dp, spread = innerShadowSpread4, color = innerShadowColor4),
+          )
+          .innerShadow(
+            shape = pillShape,
+            shadow =
+              Shadow(
+                radius = innerShadowRadius5,
+                offset = DpOffset(innerShadowXOffset5, innerShadowYOffset5),
+                color = white100,
+              ),
+          )
+          .innerShadow(
+            shape = pillShape,
+            shadow = Shadow(radius = 5.76.dp, offset = DpOffset(5.76.dp, 5.76.dp), color = white25),
+          )
+          .innerShadow(
+            shape = pillShape,
+            shadow =
+              Shadow(
+                radius = innerShadowRadius7,
                 spread = 4.8.dp,
-                offset = DpOffset((-3.6).dp, (-12).dp),
+                offset = DpOffset((-3.6).dp, innerShadowYOffset7),
                 color = gray25,
               ),
           ),
@@ -272,8 +386,7 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
                 blurRadius = with(density) { 4.8.dp.toPx() },
               ),
           ),
-        modifier =
-          Modifier.padding(horizontal = 72.dp, vertical = 48.dp).scale(textScale),
+        modifier = Modifier.padding(horizontal = 72.dp, vertical = 48.dp).scale(textScale),
       )
     }
   }
