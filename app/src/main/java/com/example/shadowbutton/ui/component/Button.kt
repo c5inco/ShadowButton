@@ -1,10 +1,12 @@
 package com.example.shadowbutton.ui.component
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Ease
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
@@ -20,15 +22,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.draw.innerShadow
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow as TextShadow
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,6 +40,8 @@ import androidx.compose.ui.unit.sp
 private val gray25 = Color(0x40050505)
 private val gray100 = Color(0xFF050505)
 private val gray50 = Color(0x80050505)
+
+private val gray75 = Color(0xBF000000)
 
 private val gray10 = Color(0x1A000000)
 
@@ -55,6 +58,20 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
   val isPressed by interactionSource.collectIsPressedAsState()
   val density = LocalDensity.current
   val pillShape = RoundedCornerShape(100)
+
+  val innerButtonScale by
+    animateFloatAsState(
+      targetValue = if (isPressed) 0.975f else 1f,
+      animationSpec = tween(durationMillis = 250, easing = Ease),
+    )
+  val innerButtonInset by animateDpAsState(
+    targetValue = if (isPressed) 2.dp else 0.dp,
+    animationSpec = tween(durationMillis = 250, easing = Ease),
+  )
+  val innerButtonInsetColor by animateColorAsState(
+    targetValue = if (isPressed) gray75 else Color.Transparent,
+    animationSpec = tween(durationMillis = 250, easing = Ease),
+  )
 
   val textScale by
     animateFloatAsState(
@@ -79,41 +96,41 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
     )
 
   val outerShadowRadius2 by
-  animateDpAsState(
-    targetValue = if (isPressed) 0.dp else 0.48.dp,
-    animationSpec = tween(durationMillis = 300, easing = Ease),
-  )
+    animateDpAsState(
+      targetValue = if (isPressed) 0.dp else 0.48.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
   val outerShadowSpread2 by
-  animateDpAsState(
-    targetValue = if (isPressed) 0.dp else (-0.48).dp,
-    animationSpec = tween(durationMillis = 300, easing = Ease),
-  )
+    animateDpAsState(
+      targetValue = if (isPressed) 0.dp else (-0.48).dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
   val outerShadowYOffset2 by
-  animateDpAsState(
-    targetValue = if (isPressed) 0.dp else 0.48.dp,
-    animationSpec = tween(durationMillis = 300, easing = Ease),
-  )
+    animateDpAsState(
+      targetValue = if (isPressed) 0.dp else 0.48.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
 
   val outerShadowRadius3 by
-  animateDpAsState(
-    targetValue = if (isPressed) 0.dp else 4.8.dp,
-    animationSpec = tween(durationMillis = 300, easing = Ease),
-  )
+    animateDpAsState(
+      targetValue = if (isPressed) 0.dp else 4.8.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
   val outerShadowSpread3 by
-  animateDpAsState(
-    targetValue = if (isPressed) 0.dp else (-0.48).dp,
-    animationSpec = tween(durationMillis = 300, easing = Ease),
-  )
+    animateDpAsState(
+      targetValue = if (isPressed) 0.dp else (-0.48).dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
   val outerShadowXOffset3 by
-  animateDpAsState(
-    targetValue = if (isPressed) 0.dp else 7.2.dp,
-    animationSpec = tween(durationMillis = 300, easing = Ease),
-  )
+    animateDpAsState(
+      targetValue = if (isPressed) 0.dp else 7.2.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
   val outerShadowYOffset3 by
-  animateDpAsState(
-    targetValue = if (isPressed) 0.dp else 14.4.dp,
-    animationSpec = tween(durationMillis = 300, easing = Ease),
-  )
+    animateDpAsState(
+      targetValue = if (isPressed) 0.dp else 14.4.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
 
   Box(contentAlignment = Alignment.Center, modifier = modifier.wrapContentSize()) {
     Row(
@@ -138,8 +155,12 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
     ) {}
     Row(
       modifier =
-        Modifier.clickable(interactionSource = interactionSource, indication = null, onClick = {})
-          .background(color = Color.Magenta, shape = pillShape)
+        Modifier.clickable(
+            interactionSource = interactionSource,
+            indication = null,
+            onClick = onClick,
+          )
+          .background(color = gray75, shape = pillShape)
           .dropShadow(
             shape = pillShape,
             shadow =
@@ -186,6 +207,8 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
               ),
           )
           // Button background
+          .scale(innerButtonScale)
+          .border(width = innerButtonInset, color = innerButtonInsetColor, shape = pillShape)
           .background(
             brush = CssGradientBrush(135.0, innerButtonBackgroundColors),
             shape = pillShape,
@@ -250,10 +273,7 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
               ),
           ),
         modifier =
-          Modifier.padding(horizontal = 72.dp, vertical = 48.dp).graphicsLayer {
-            scaleX = textScale
-            scaleY = textScale
-          },
+          Modifier.padding(horizontal = 72.dp, vertical = 48.dp).scale(textScale),
       )
     }
   }
