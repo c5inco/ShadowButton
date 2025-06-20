@@ -1,6 +1,14 @@
 package com.example.shadowbutton.ui.component
 
+import androidx.compose.animation.core.Ease
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
@@ -10,6 +18,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.dropShadow
@@ -17,6 +28,7 @@ import androidx.compose.ui.draw.innerShadow
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow as TextShadow
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,8 +50,70 @@ private val innerButtonTextColors = listOf(Color(0xFF4B4B4B), Color(0xFF191919))
 
 @Composable
 fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+  val interactionSource = remember { MutableInteractionSource() }
+  val isHovered by interactionSource.collectIsHoveredAsState()
+  val isPressed by interactionSource.collectIsPressedAsState()
   val density = LocalDensity.current
   val pillShape = RoundedCornerShape(100)
+
+  val textScale by
+    animateFloatAsState(
+      targetValue = if (isPressed) 0.975f else 1f,
+      animationSpec = tween(durationMillis = 250, easing = Ease),
+    )
+
+  val outerShadowRadius1 by
+    animateDpAsState(
+      targetValue = if (isPressed) 0.dp else 2.4.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val outerShadowSpread1 by
+    animateDpAsState(
+      targetValue = if (isPressed) 0.dp else (-0.48).dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+  val outerShadowYOffset1 by
+    animateDpAsState(
+      targetValue = if (isPressed) 0.dp else 2.4.dp,
+      animationSpec = tween(durationMillis = 300, easing = Ease),
+    )
+
+  val outerShadowRadius2 by
+  animateDpAsState(
+    targetValue = if (isPressed) 0.dp else 0.48.dp,
+    animationSpec = tween(durationMillis = 300, easing = Ease),
+  )
+  val outerShadowSpread2 by
+  animateDpAsState(
+    targetValue = if (isPressed) 0.dp else (-0.48).dp,
+    animationSpec = tween(durationMillis = 300, easing = Ease),
+  )
+  val outerShadowYOffset2 by
+  animateDpAsState(
+    targetValue = if (isPressed) 0.dp else 0.48.dp,
+    animationSpec = tween(durationMillis = 300, easing = Ease),
+  )
+
+  val outerShadowRadius3 by
+  animateDpAsState(
+    targetValue = if (isPressed) 0.dp else 4.8.dp,
+    animationSpec = tween(durationMillis = 300, easing = Ease),
+  )
+  val outerShadowSpread3 by
+  animateDpAsState(
+    targetValue = if (isPressed) 0.dp else (-0.48).dp,
+    animationSpec = tween(durationMillis = 300, easing = Ease),
+  )
+  val outerShadowXOffset3 by
+  animateDpAsState(
+    targetValue = if (isPressed) 0.dp else 7.2.dp,
+    animationSpec = tween(durationMillis = 300, easing = Ease),
+  )
+  val outerShadowYOffset3 by
+  animateDpAsState(
+    targetValue = if (isPressed) 0.dp else 14.4.dp,
+    animationSpec = tween(durationMillis = 300, easing = Ease),
+  )
 
   Box(contentAlignment = Alignment.Center, modifier = modifier.wrapContentSize()) {
     Row(
@@ -64,7 +138,8 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
     ) {}
     Row(
       modifier =
-        Modifier.background(color = Color.Magenta, shape = pillShape)
+        Modifier.clickable(interactionSource = interactionSource, indication = null, onClick = {})
+          .background(color = Color.Magenta, shape = pillShape)
           .dropShadow(
             shape = pillShape,
             shadow =
@@ -79,13 +154,14 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
             shape = pillShape,
             shadow = Shadow(radius = 3.24.dp, offset = DpOffset(1.8.dp, 1.8.dp), color = gray10),
           )
+          // Outer shadows
           .dropShadow(
             shape = pillShape,
             shadow =
               Shadow(
-                radius = 2.4.dp,
-                spread = (-0.48).dp,
-                offset = DpOffset(0.dp, 2.4.dp),
+                radius = outerShadowRadius1,
+                spread = outerShadowSpread1,
+                offset = DpOffset(0.dp, outerShadowYOffset1),
                 color = gray100,
               ),
           )
@@ -93,9 +169,9 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
             shape = pillShape,
             shadow =
               Shadow(
-                radius = 0.48.dp,
-                spread = (-0.48).dp,
-                offset = DpOffset(0.dp, 0.48.dp),
+                radius = outerShadowRadius2,
+                spread = outerShadowSpread2,
+                offset = DpOffset(0.dp, outerShadowYOffset2),
                 color = gray50,
               ),
           )
@@ -103,16 +179,18 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
             shape = pillShape,
             shadow =
               Shadow(
-                radius = 4.8.dp,
-                spread = (-0.48).dp,
-                offset = DpOffset(7.2.dp, 14.4.dp),
+                radius = outerShadowRadius3,
+                spread = outerShadowSpread3,
+                offset = DpOffset(outerShadowXOffset3, outerShadowYOffset3),
                 color = gray25,
               ),
           )
+          // Button background
           .background(
             brush = CssGradientBrush(135.0, innerButtonBackgroundColors),
             shape = pillShape,
           )
+          // Inner shadows
           .innerShadow(
             shape = pillShape,
             shadow =
@@ -171,7 +249,11 @@ fun NeumorphicButton(text: String, modifier: Modifier = Modifier, onClick: () ->
                 blurRadius = with(density) { 4.8.dp.toPx() },
               ),
           ),
-        modifier = Modifier.padding(horizontal = 72.dp, vertical = 48.dp),
+        modifier =
+          Modifier.padding(horizontal = 72.dp, vertical = 48.dp).graphicsLayer {
+            scaleX = textScale
+            scaleY = textScale
+          },
       )
     }
   }
